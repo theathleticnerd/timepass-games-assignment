@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { BrowserRouter } from 'react-router';
+import AppRoutes from '/src/router/index.jsx';
 export default function App() {
   return (
     <>
-      <h1>Vite + React asdfafda</h1>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
     </>
   );
 }
