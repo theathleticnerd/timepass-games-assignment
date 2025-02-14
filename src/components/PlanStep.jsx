@@ -31,11 +31,14 @@ export default function Plan() {
           return (
             <div
               key={plan.name}
-              className="border h-[9.3rem] border-gray-300 basis-1/3 flex flex-col justify-between rounded-lg px-2.5 py-2.5">
-              <img src={plan.icon} alt="Arcade Icon" className="size-10 mt-1" />
+              className="border border-gray-300 basis-1/3 flex flex-col justify-between rounded-lg px-2.5 py-2.5">
+              <img src={plan.icon} alt="Arcade Icon" className="size-10 mb-8 mt-1" />
               <div>
                 <p className="text-marine-blue font-semibold"> {plan.name} </p>
-                <p className="text-sm text-cool-gray"> {isAnnual ? plan.yearly : plan.monthly} </p>
+                <p className="text-sm text-cool-gray">{isAnnual ? plan.yearly : plan.monthly} </p>
+                {isAnnual && (
+                  <p className="mt-1 text-marine-blue text-xs font-medium">2 months free</p>
+                )}
               </div>
             </div>
           );

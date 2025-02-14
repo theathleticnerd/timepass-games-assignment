@@ -1,49 +1,57 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
 import InfoStep from 'src/components/InfoStep';
 import PlanStep from 'src/components/PlanStep';
+import AddonStep from 'src/components/AddonStep';
 export default function HomePage() {
   const steps = [
     {
       id: 1,
+      name: 'step1',
       title: 'Your Info'
     },
     {
       id: 2,
+      name: 'step2',
       title: 'Select Plan'
     },
     {
       id: 3,
+      name: 'step3',
       title: 'Add Ons'
     },
     {
       id: 4,
+      name: 'step4',
       title: 'Summary'
     }
   ];
   const stepContent = {
-    1: {
+    step1: {
       title: 'Personal Info',
       subtitle: 'Please provide your name, email address and phone number.',
       component: <InfoStep />
     },
-    2: {
+    step2: {
       title: 'Select Your Plan',
       subtitle: 'You have the option of monthly or yearly billing.',
       component: <PlanStep />
     },
-    3: {
-      title: 'Personal Info',
-      subtitle: 'Please provide your name, email address and phone number.',
-      component: <InfoStep />
+    step3: {
+      title: 'Pick Add-ons',
+      subtitle: 'Add-ons help enhance your gaming experience.',
+      component: <AddonStep />
     },
-    4: {
+    step4: {
       title: 'Personal Info',
       subtitle: 'Please provide your name, email address and phone number.',
       component: <InfoStep />
     }
   };
   const [activeStep, setActiveStep] = useState(1);
+  const currentStep = useMemo(() => {
+    return stepContent[steps[activeStep - 1].name];
+  }, [activeStep]);
   const goToNextStep = () => {
     if (activeStep < steps.length) {
       setActiveStep(activeStep + 1);
@@ -75,14 +83,12 @@ export default function HomePage() {
           <img src={DesktopBanner} alt="Desktop Banner Image" className="invisible" />
         </div>
         <div className="mr-20 flex flex-col justify-between grow pt-10 pb-6">
-          <h2 className="text-marine-blue text-3xl font-bold mb-2">
-            {stepContent[activeStep].title}
-          </h2>
-          <p className="text-cool-gray mb-6 text-sm">{stepContent[activeStep].subtitle}</p>
-          <div className="grow">{stepContent[activeStep].component}</div>
+          <h2 className="text-marine-blue text-3xl font-bold mb-2">{currentStep.title}</h2>
+          <p className="text-cool-gray mb-6 text-sm font-medium">{currentStep.subtitle}</p>
+          <div className="grow">{currentStep.component}</div>
           <div className="flex justify-between items-center">
             <button
-              className={`font-medium text-cool-gray ${activeStep === 1 ? 'invisible' : 'visible'}`}
+              className={`font-medium text-cool-gray ${activeStep === 1 ? 'invisible' : 'visible'} cursor-pointer`}
               onClick={goToPreviousStep}>
               Go Back
             </button>
