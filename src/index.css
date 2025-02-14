@@ -14,11 +14,20 @@
 .text-purplish-blue {
   @apply text-[#473dff];
 }
+.bg-purplish-blue {
+  @apply bg-[#473dff];
+}
 .text-pastel-blue {
   @apply text-[#adbeff];
 }
+.bg-pastel-blue {
+  @apply bg-[#adbeff];
+}
 .text-light-blue {
   @apply text-[#bfe2fd];
+}
+.bg-light-blue {
+  @apply bg-[#bfe2fd];
 }
 .text-strawberry-red {
   @apply text-[#ed3548];

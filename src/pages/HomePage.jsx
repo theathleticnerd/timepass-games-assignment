@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
-import TextField from 'src/components/TextField';
+import InfoStep from 'src/components/InfoStep';
+import PlanStep from 'src/components/PlanStep';
 export default function HomePage() {
   const steps = [
     {
@@ -19,7 +21,39 @@ export default function HomePage() {
       title: 'Summary'
     }
   ];
-  const activeStep = 1;
+  const stepContent = {
+    1: {
+      title: 'Personal Info',
+      subtitle: 'Please provide your name, email address and phone number.',
+      component: <InfoStep />
+    },
+    2: {
+      title: 'Select Your Plan',
+      subtitle: 'You have the option of monthly or yearly billing.',
+      component: <PlanStep />
+    },
+    3: {
+      title: 'Personal Info',
+      subtitle: 'Please provide your name, email address and phone number.',
+      component: <InfoStep />
+    },
+    4: {
+      title: 'Personal Info',
+      subtitle: 'Please provide your name, email address and phone number.',
+      component: <InfoStep />
+    }
+  };
+  const [activeStep, setActiveStep] = useState(1);
+  const goToNextStep = () => {
+    if (activeStep < steps.length) {
+      setActiveStep(activeStep + 1);
+    }
+  };
+  const goToPreviousStep = () => {
+    if (activeStep > 1) {
+      setActiveStep(activeStep - 1);
+    }
+  };
   return (
     <main className="max-w-7xl mx-auto h-svh relative">
       <div className="absolute flex bg-white w-4xl top-1/2 left-1/2 -translate-1/2 min-h-[32rem] rounded-xl shadow-lg px-3 py-3 justify-between space-x-24">
@@ -40,20 +74,24 @@ export default function HomePage() {
           </div>
           <img src={DesktopBanner} alt="Desktop Banner Image" className="invisible" />
         </div>
-        <div className="mr-20 grow py-10 relative">
-          <h2 className="text-marine-blue text-3xl font-bold mb-2">Personal Info</h2>
-          <p className="text-cool-gray mb-6 text-sm">
-            Please provide your name, email address and phone number.
-          </p>
-          {/*  */}
-          <div className="space-y-8">
-            <TextField label="Name" placeholder="e.g. Stephen King" />
-            <TextField label="Email Address" placeholder="e.g. stephenking@lorem.com" />
-            <TextField label="Phone Number" placeholder="e.g. +1 234 567 890" />
+        <div className="mr-20 flex flex-col justify-between grow pt-10 pb-6">
+          <h2 className="text-marine-blue text-3xl font-bold mb-2">
+            {stepContent[activeStep].title}
+          </h2>
+          <p className="text-cool-gray mb-6 text-sm">{stepContent[activeStep].subtitle}</p>
+          <div className="grow">{stepContent[activeStep].component}</div>
+          <div className="flex justify-between items-center">
+            <button
+              className={`font-medium text-cool-gray ${activeStep === 1 ? 'invisible' : 'visible'}`}
+              onClick={goToPreviousStep}>
+              Go Back
+            </button>
+            <button
+              className="px-6 bg-marine-blue py-3 text-white rounded-lg font-semibold text-sm cursor-pointer"
+              onClick={goToNextStep}>
+              Next Step
+            </button>
           </div>
-          <button className="absolute right-0 px-6 bg-marine-blue py-3 bottom-0 mb-4 text-white rounded-lg font-semibold text-sm">
-            Next Step
-          </button>
         </div>
       </div>
     </main>
