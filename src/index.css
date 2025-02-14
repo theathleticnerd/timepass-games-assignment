@@ -36,14 +36,26 @@
 .text-cool-gray {
   @apply text-[#9699ab];
 }
+.bg-cool-gray {
+  @apply bg-[#9699ab];
+}
 .text-light-gray {
   @apply text-[#d6d9e6];
+}
+.bg-light-gray {
+  @apply bg-[#d6d9e6];
 }
 .text-magnolia {
   @apply text-[#f0f6ff];
 }
+.bg-magnolia {
+  @apply bg-[#f0f6ff];
+}
 .text-alabaster {
   @apply text-[#fafbff];
+}
+.bg-alabaster {
+  @apply bg-[#fafbff];
 }
 /* White: hsl(0, 0%, 100%) */
 body {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import arcadeIcon from 'src/assets/icons/arcade.svg';
 import advancedIcon from 'src/assets/icons/advanced.svg';
 import proIcon from 'src/assets/icons/pro.svg';
-export default function Plan() {
+export default function PlanStep() {
   const plans = [
     {
       icon: arcadeIcon,

@@ -1,5 +1,5 @@
 import TextField from 'src/components/TextField';
-export default function PersonalInfo() {
+export default function InfoStep() {
   return (
     <div className="space-y-8">
       <TextField label="Name" placeholder="e.g. Stephen King" />

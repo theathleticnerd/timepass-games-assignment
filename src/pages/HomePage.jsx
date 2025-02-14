@@ -3,6 +3,7 @@ import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
 import InfoStep from 'src/components/InfoStep';
 import PlanStep from 'src/components/PlanStep';
 import AddonStep from 'src/components/AddonStep';
+import SummaryStep from 'src/components/SummaryStep';
 export default function HomePage() {
   const steps = [
     {
@@ -43,9 +44,9 @@ export default function HomePage() {
       component: <AddonStep />
     },
     step4: {
-      title: 'Personal Info',
-      subtitle: 'Please provide your name, email address and phone number.',
-      component: <InfoStep />
+      title: 'Finishing Up',
+      subtitle: 'Double check whether everything looks OK before confirming.',
+      component: <SummaryStep />
     }
   };
   const [activeStep, setActiveStep] = useState(1);
@@ -95,7 +96,7 @@ export default function HomePage() {
             <button
               className="px-6 bg-marine-blue py-3 text-white rounded-lg font-semibold text-sm cursor-pointer"
               onClick={goToNextStep}>
-              Next Step
+              {activeStep === steps.length ? 'Confirm' : 'Next Step'}
             </button>
           </div>
         </div>
