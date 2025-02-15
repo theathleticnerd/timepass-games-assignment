@@ -1,34 +1,10 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import arcadeIcon from 'src/assets/icons/arcade.svg';
-import advancedIcon from 'src/assets/icons/advanced.svg';
-import proIcon from 'src/assets/icons/pro.svg';
+import planOptions from 'src/data/planOptions';
 const PlanStep = forwardRef((props, ref) => {
-  const plans = [
-    {
-      id: 201,
-      icon: arcadeIcon,
-      name: 'Arcade',
-      monthly: '$9/mo',
-      yearly: '$90/yr'
-    },
-    {
-      id: 202,
-      icon: advancedIcon,
-      name: 'Advanced',
-      monthly: '$12/mo',
-      yearly: '$120/yr'
-    },
-    {
-      id: 203,
-      icon: proIcon,
-      name: 'Pro',
-      monthly: '$15/mo',
-      yearly: '$150/yr'
-    }
-  ];
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [isAnnual, setIsAnnual] = useState(false);
-  const saveData = () => {
+  const userData = props.userData || {};
+  const [selectedPlan, setSelectedPlan] = useState(userData.planID || null);
+  const [isAnnual, setIsAnnual] = useState(userData.isAnnual || false);
+  const nextStep = () => {
     let isValid = true;
     if (!selectedPlan) {
       console.log('Please select a plan.');
@@ -42,21 +18,23 @@ const PlanStep = forwardRef((props, ref) => {
     }
   };
   useImperativeHandle(ref, () => ({
-    saveData: saveData
+    nextStep: nextStep
   }));
   return (
     <div className="mt-4">
       <div className="flex space-x-4 mb-8">
-        {plans.map((plan) => {
+        {planOptions.map((plan) => {
           return (
             <div
               key={plan.name}
-              className={`border border-light-gray basis-1/3 flex flex-col justify-between rounded-lg px-2.5 py-2.5 ${plan.id === selectedPlan && 'bg-magnolia'}`}
+              className={`border border-light-gray basis-1/3 flex flex-col justify-between rounded-lg cursor-pointer px-2.5 py-2.5 ${plan.id === selectedPlan && 'bg-magnolia'}`}
               onClick={() => setSelectedPlan(plan.id)}>
               <img src={plan.icon} alt="Arcade Icon" className="size-10 mb-8 mt-1" />
               <div>
                 <p className="text-marine-blue font-semibold"> {plan.name} </p>
-                <p className="text-sm text-cool-gray">{isAnnual ? plan.yearly : plan.monthly} </p>
+                <p className="text-sm text-cool-gray">
+                  {isAnnual ? `$${plan.annualCost}/yr` : `$${plan.monthlyCost}/mo`}
+                </p>
                 {isAnnual && (
                   <p className="mt-1 text-marine-blue text-xs font-medium">2 months free</p>
                 )}
@@ -69,7 +47,7 @@ const PlanStep = forwardRef((props, ref) => {
       <label className="flex justify-center items-center bg-light-blue py-2 rounded-lg cursor-pointer">
         <input
           type="checkbox"
-          value=""
+          checked={isAnnual}
           className="sr-only peer"
           onChange={(event) => {
             setIsAnnual(event.target.checked);

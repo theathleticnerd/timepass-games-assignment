@@ -52,18 +52,21 @@ export default function HomePage() {
   };
   const [userData, setUserData] = useState({});
   const [activeStep, setActiveStep] = useState(1);
+  const [isThankYouScreen, setIsThankYouScreen] = useState(false);
   const currentStep = useMemo(() => {
     return stepContent[steps[activeStep - 1].name];
   }, [activeStep]);
   const goToNextStep = async () => {
     if (stepRefs.current[activeStep]?.current) {
-      const result = await stepRefs.current[activeStep].current.saveData();
+      const result = await stepRefs.current[activeStep].current.nextStep();
       if (result && activeStep < steps.length) {
         setUserData((prev) => ({
           ...prev,
           ...result
         }));
         setActiveStep(activeStep + 1);
+      } else if (activeStep === steps.length) {
+        setIsThankYouScreen(true);
       }
     }
   };
@@ -77,12 +80,6 @@ export default function HomePage() {
   const stepRefs = useRef({});
   const Component = currentStep.component;
   const ref = (stepRefs.current[activeStep] = useRef(null));
-  //
-
-  const [isThankYouScreen, setIsThankYouScreen] = useState(false);
-  const showThankYouScreen = () => {
-    setIsThankYouScreen(true);
-  };
   return (
     <main className="max-w-7xl mx-auto h-svh relative">
       <div className="absolute flex bg-white w-4xl top-1/2 left-1/2 -translate-1/2 min-h-[32rem] rounded-xl shadow-lg px-3 py-3 justify-between space-x-24">
@@ -121,7 +118,7 @@ export default function HomePage() {
                 </button>
                 <button
                   className="px-6 bg-marine-blue py-3 text-white rounded-lg font-semibold text-sm cursor-pointer"
-                  onClick={activeStep === steps.length ? showThankYouScreen : goToNextStep}>
+                  onClick={goToNextStep}>
                   {activeStep === steps.length ? 'Confirm' : 'Next Step'}
                 </button>
               </div>

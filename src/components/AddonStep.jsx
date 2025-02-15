@@ -1,31 +1,9 @@
 import { forwardRef, useImperativeHandle, useState } from 'react';
-
+import addOnOptions from 'src/data/addOnOptions';
 const AddonStep = forwardRef((props, ref) => {
-  const isAnnual = props.userData.isAnnual || false;
-  const addOnSteps = [
-    {
-      name: 'addOnStep1',
-      title: 'Online Services',
-      subtitle: 'Access to multiplayer games.',
-      monthlyCost: '+$1/mo',
-      annualCost: '+$10/yr'
-    },
-    {
-      name: 'addOnStep2',
-      title: 'Larger Storage',
-      subtitle: 'Extra 1TB of cloud save.',
-      monthlyCost: '+$2/mo',
-      annualCost: '+$20/yr'
-    },
-    {
-      name: 'addOnStep3',
-      title: 'Customizable Profile',
-      subtitle: 'Custom theme on your profile.',
-      monthlyCost: '+$2/mo',
-      annualCost: '+$20/yr'
-    }
-  ];
-  const [checkedItems, setCheckedItems] = useState(new Set());
+  const userData = props.userData;
+  const isAnnual = userData.isAnnual || false;
+  const [checkedItems, setCheckedItems] = useState(new Set(userData.addOnIDs || null));
   const toggleChecked = (id) => {
     setCheckedItems((prev) => {
       const newChecked = new Set(prev);
@@ -33,35 +11,35 @@ const AddonStep = forwardRef((props, ref) => {
       return newChecked;
     });
   };
-  const saveData = () => {
+  const nextStep = () => {
     const selectedArr = [...checkedItems];
     return { addOnIDs: selectedArr };
   };
   useImperativeHandle(ref, () => ({
-    saveData: saveData
+    nextStep: nextStep
   }));
   return (
     <div className="space-y-4">
-      {addOnSteps.map((addOnStep) => {
-        const isChecked = checkedItems.has(addOnStep.name);
+      {addOnOptions.map((addOnStep) => {
+        const isChecked = checkedItems.has(addOnStep.id);
         return (
           <label
-            key={addOnStep.name}
-            htmlFor={addOnStep.name}
-            className={`border border-light-gray flex items-center space-x-6 py-4 px-4 rounded-lg ${isChecked ? 'bg-magnolia' : ''}`}>
+            key={addOnStep.id}
+            htmlFor={addOnStep.id}
+            className={`border border-light-gray flex items-center space-x-6 py-4 px-4 rounded-lg cursor-pointer ${isChecked ? 'bg-magnolia' : ''}`}>
             <input
-              id={addOnStep.name}
+              id={addOnStep.id}
               type="checkbox"
-              value={isChecked}
+              checked={isChecked}
               className="size-5 accent-purplish-blue bg-light-gray border-light-gray rounded-3xl focus:ring-purplish-blue focus:ring"
-              onChange={() => toggleChecked(addOnStep.name)}
+              onChange={() => toggleChecked(addOnStep.id)}
             />
             <div className="grow">
               <p className="font-semibold text-marine-blue">{addOnStep.title}</p>
               <p className="text-sm text-cool-gray">{addOnStep.subtitle}</p>
             </div>
             <p className="text-purplish-blue font-medium text-sm">
-              {isAnnual ? addOnStep.annualCost : addOnStep.monthlyCost}
+              {isAnnual ? `$${addOnStep.annualCost}/yr` : `$${addOnStep.monthlyCost}/mo`}
             </p>
           </label>
         );
