@@ -3,7 +3,7 @@ import { useState } from 'react';
 export default function TextField(props) {
   const label = props.label || null;
   const type = props.type || 'text';
-  const value = props.value || null;
+  const value = props.value || '';
   const onChange = props.onChange;
   const placeholder = props.placeholder || null;
   const required = props.required || false;

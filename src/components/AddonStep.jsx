@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 
-export default function AddonStep() {
+const AddonStep = forwardRef((props, ref) => {
+  const isAnnual = props.userData.isAnnual || false;
   const addOnSteps = [
     {
       name: 'addOnStep1',
@@ -24,7 +25,6 @@ export default function AddonStep() {
       annualCost: '+$20/yr'
     }
   ];
-
   const [checkedItems, setCheckedItems] = useState(new Set());
   const toggleChecked = (id) => {
     setCheckedItems((prev) => {
@@ -33,6 +33,13 @@ export default function AddonStep() {
       return newChecked;
     });
   };
+  const saveData = () => {
+    const selectedArr = [...checkedItems];
+    return { addOnIDs: selectedArr };
+  };
+  useImperativeHandle(ref, () => ({
+    saveData: saveData
+  }));
   return (
     <div className="space-y-4">
       {addOnSteps.map((addOnStep) => {
@@ -53,10 +60,13 @@ export default function AddonStep() {
               <p className="font-semibold text-marine-blue">{addOnStep.title}</p>
               <p className="text-sm text-cool-gray">{addOnStep.subtitle}</p>
             </div>
-            <p className="text-purplish-blue font-medium text-sm">{addOnStep.monthlyCost}</p>
+            <p className="text-purplish-blue font-medium text-sm">
+              {isAnnual ? addOnStep.annualCost : addOnStep.monthlyCost}
+            </p>
           </label>
         );
       })}
     </div>
   );
-}
+});
+export default AddonStep;

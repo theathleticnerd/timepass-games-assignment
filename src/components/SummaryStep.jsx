@@ -1,6 +1,12 @@
-export default function SummaryStep() {
+import { forwardRef, useImperativeHandle, useState } from 'react';
+const SummaryStep = forwardRef((props, ref) => {
+  const userData = props.userData;
+  useImperativeHandle(ref, () => ({
+    getData: () => console.log('Summary Step')
+  }));
   return (
     <div>
+      {JSON.stringify(userData)}
       <div className="bg-magnolia px-6 py-4 rounded-lg mb-4">
         <div className="flex justify-between items-center mb-6">
           <div>
@@ -29,4 +35,5 @@ export default function SummaryStep() {
       </p>
     </div>
   );
-}
+});
+export default SummaryStep;

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
 import ThankYouScreen from 'src/components/ThankYouScreen';
 import InfoStep from 'src/components/InfoStep';
@@ -32,31 +32,39 @@ export default function HomePage() {
     step1: {
       title: 'Personal Info',
       subtitle: 'Please provide your name, email address and phone number.',
-      component: <InfoStep />
+      component: InfoStep
     },
     step2: {
       title: 'Select Your Plan',
       subtitle: 'You have the option of monthly or yearly billing.',
-      component: <PlanStep />
+      component: PlanStep
     },
     step3: {
       title: 'Pick Add-ons',
       subtitle: 'Add-ons help enhance your gaming experience.',
-      component: <AddonStep />
+      component: AddonStep
     },
     step4: {
       title: 'Finishing Up',
       subtitle: 'Double check whether everything looks OK before confirming.',
-      component: <SummaryStep />
+      component: SummaryStep
     }
   };
+  const [userData, setUserData] = useState({});
   const [activeStep, setActiveStep] = useState(1);
   const currentStep = useMemo(() => {
     return stepContent[steps[activeStep - 1].name];
   }, [activeStep]);
-  const goToNextStep = () => {
-    if (activeStep < steps.length) {
-      setActiveStep(activeStep + 1);
+  const goToNextStep = async () => {
+    if (stepRefs.current[activeStep]?.current) {
+      const result = await stepRefs.current[activeStep].current.saveData();
+      if (result && activeStep < steps.length) {
+        setUserData((prev) => ({
+          ...prev,
+          ...result
+        }));
+        setActiveStep(activeStep + 1);
+      }
     }
   };
   const goToPreviousStep = () => {
@@ -64,6 +72,12 @@ export default function HomePage() {
       setActiveStep(activeStep - 1);
     }
   };
+  //
+  // Store the ref for the current component
+  const stepRefs = useRef({});
+  const Component = currentStep.component;
+  const ref = (stepRefs.current[activeStep] = useRef(null));
+  //
 
   const [isThankYouScreen, setIsThankYouScreen] = useState(false);
   const showThankYouScreen = () => {
@@ -96,7 +110,9 @@ export default function HomePage() {
             <div className="flex flex-col h-full justify-between pt-10 pb-6 grow">
               <h2 className="text-marine-blue text-3xl font-bold mb-2">{currentStep.title}</h2>
               <p className="text-cool-gray mb-6 text-sm font-medium">{currentStep.subtitle}</p>
-              <div className="grow">{currentStep.component}</div>
+              <div className="grow">
+                <Component ref={ref} userData={userData} />
+              </div>
               <div className="flex justify-between items-center">
                 <button
                   className={`font-medium text-cool-gray hover:text-marine-blue focus:text-marine-blue active:text-marine-blue cursor-pointer ${activeStep === 1 ? 'invisible' : 'visible'}`}

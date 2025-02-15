@@ -1,25 +1,25 @@
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import arcadeIcon from 'src/assets/icons/arcade.svg';
 import advancedIcon from 'src/assets/icons/advanced.svg';
 import proIcon from 'src/assets/icons/pro.svg';
-export default function PlanStep() {
+const PlanStep = forwardRef((props, ref) => {
   const plans = [
     {
-      id: 1,
+      id: 201,
       icon: arcadeIcon,
       name: 'Arcade',
       monthly: '$9/mo',
       yearly: '$90/yr'
     },
     {
-      id: 2,
+      id: 202,
       icon: advancedIcon,
       name: 'Advanced',
       monthly: '$12/mo',
       yearly: '$120/yr'
     },
     {
-      id: 3,
+      id: 203,
       icon: proIcon,
       name: 'Pro',
       monthly: '$15/mo',
@@ -28,6 +28,22 @@ export default function PlanStep() {
   ];
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [isAnnual, setIsAnnual] = useState(false);
+  const saveData = () => {
+    let isValid = true;
+    if (!selectedPlan) {
+      console.log('Please select a plan.');
+      isValid = false;
+    }
+    if (isValid) {
+      return {
+        planID: selectedPlan,
+        isAnnual: isAnnual
+      };
+    }
+  };
+  useImperativeHandle(ref, () => ({
+    saveData: saveData
+  }));
   return (
     <div className="mt-4">
       <div className="flex space-x-4 mb-8">
@@ -71,4 +87,5 @@ export default function PlanStep() {
       </label>
     </div>
   );
-}
+});
+export default PlanStep;

@@ -1,26 +1,30 @@
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 import TextField from 'src/components/TextField';
-export default function InfoStep() {
+const InfoStep = forwardRef((props, ref) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const [isFormValid, setIsFormValid] = useState(false);
-  const saveInfo = () => {
-    setIsFormValid(true);
+  const saveData = () => {
+    let isValid = true;
     if (!name) {
       console.log('Name is required.');
-      setIsFormValid(false);
+      isValid(false);
     }
     if (!phoneNumber) {
       console.log('Phone Number is required');
-      setIsFormValid(false);
+      isValid(false);
     }
-
-    if (isFormValid) {
-      console.log('Go To Next Step');
+    if (isValid) {
+      return { name, email, phoneNumber };
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    getData: () => console.log('Info Step'),
+    saveData: saveData
+  }));
+
   return (
     <div className="space-y-8">
       <TextField
@@ -46,9 +50,7 @@ export default function InfoStep() {
         }}
         required
       />
-      <p>{name}</p>
-      <p>{email}</p>
-      <p>{phoneNumber}</p>
     </div>
   );
-}
+});
+export default InfoStep;
