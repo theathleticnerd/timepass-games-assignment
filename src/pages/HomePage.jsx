@@ -99,7 +99,7 @@ export default function HomePage() {
               <div className="grow">{currentStep.component}</div>
               <div className="flex justify-between items-center">
                 <button
-                  className={`font-medium text-cool-gray ${activeStep === 1 ? 'invisible' : 'visible'} cursor-pointer`}
+                  className={`font-medium text-cool-gray hover:text-marine-blue focus:text-marine-blue active:text-marine-blue cursor-pointer ${activeStep === 1 ? 'invisible' : 'visible'}`}
                   onClick={goToPreviousStep}>
                   Go Back
                 </button>

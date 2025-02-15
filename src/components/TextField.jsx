@@ -13,7 +13,7 @@ export default function TextField(props) {
         )}
       </div>
       <input
-        className="border border-gray-200 w-full h-12 px-2.5 rounded-lg font-medium"
+        className="border border-light-gray w-full h-12 px-2.5 rounded-lg font-medium"
         placeholder={placeholder}
       />
     </div>

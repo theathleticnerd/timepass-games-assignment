@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export default function AddonStep() {
   const addOnSteps = [
     {
@@ -22,25 +24,39 @@ export default function AddonStep() {
       annualCost: '+$20/yr'
     }
   ];
+
+  const [checkedItems, setCheckedItems] = useState(new Set());
+  const toggleChecked = (id) => {
+    setCheckedItems((prev) => {
+      const newChecked = new Set(prev);
+      newChecked.has(id) ? newChecked.delete(id) : newChecked.add(id);
+      return newChecked;
+    });
+  };
   return (
     <div className="space-y-4">
-      {addOnSteps.map((addOnStep) => (
-        <label
-          key={addOnStep.name}
-          for={addOnStep.name}
-          className="border flex items-center space-x-6 py-4 px-4 rounded-lg">
-          <input
-            id={addOnStep.name}
-            type="checkbox"
-            className="size-5 accent-purple-500 bg-gray-500 border-gray-50 rounded-3xl focus:ring-blue-500 focus:ring-2"
-          />
-          <div className="grow">
-            <p className="font-semibold text-marine-blue">{addOnStep.title}</p>
-            <p className="text-sm text-cool-gray">{addOnStep.subtitle}</p>
-          </div>
-          <p className="text-purplish-blue font-medium text-sm">{addOnStep.monthlyCost}</p>
-        </label>
-      ))}
+      {addOnSteps.map((addOnStep) => {
+        const isChecked = checkedItems.has(addOnStep.name);
+        return (
+          <label
+            key={addOnStep.name}
+            htmlFor={addOnStep.name}
+            className={`border border-light-gray flex items-center space-x-6 py-4 px-4 rounded-lg ${isChecked ? 'bg-magnolia' : ''}`}>
+            <input
+              id={addOnStep.name}
+              type="checkbox"
+              value={isChecked}
+              className="size-5 accent-purplish-blue bg-light-gray border-light-gray rounded-3xl focus:ring-purplish-blue focus:ring"
+              onChange={() => toggleChecked(addOnStep.name)}
+            />
+            <div className="grow">
+              <p className="font-semibold text-marine-blue">{addOnStep.title}</p>
+              <p className="text-sm text-cool-gray">{addOnStep.subtitle}</p>
+            </div>
+            <p className="text-purplish-blue font-medium text-sm">{addOnStep.monthlyCost}</p>
+          </label>
+        );
+      })}
     </div>
   );
 }
