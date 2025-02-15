@@ -3,6 +3,7 @@ import planOptions from 'src/data/planOptions';
 import addOnOptions from 'src/data/addOnOptions';
 const SummaryStep = forwardRef((props, ref) => {
   const userData = props.userData;
+  const goToStep = props.goToStep;
   const selectedPlan = planOptions.find((plan) => plan.id === userData.planID);
   const selectedAddOns = addOnOptions.filter((addOn) => userData.addOnIDs.includes(addOn.id));
   const totalCost = () => {
@@ -13,18 +14,25 @@ const SummaryStep = forwardRef((props, ref) => {
     });
     return total;
   };
+  const goToPlanStep = () => {
+    goToStep(2);
+  };
   useImperativeHandle(ref, () => ({
     nextStep: () => console.log(userData)
   }));
   return (
     <div>
       <div className="bg-magnolia px-6 py-4 rounded-lg mb-4">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-3 lg:mb-3.5">
           <div>
             <p className="font-semibold text-marine-blue">
               {selectedPlan.name} <span>({userData.isAnnual ? 'Yearly' : 'Monthly'})</span>
             </p>
-            <p className="text-sm text-cool-gray underline">Change</p>
+            <button
+              className="text-sm text-cool-gray underline cursor-pointer"
+              onClick={goToPlanStep}>
+              Change
+            </button>
           </div>
           <button className="text-marine-blue font-semibold cursor-pointer">
             {userData.isAnnual
@@ -32,13 +40,13 @@ const SummaryStep = forwardRef((props, ref) => {
               : `$${selectedPlan.monthlyCost}/mo`}
           </button>
         </div>
-        <div className="border-b bg-light-gray mb-6"></div>
+        <div className="border-b border-light-gray pt-0.5 mb-3 lg:mb-3.5"></div>
         <div className="space-y-4 mb-2">
           {selectedAddOns.map((addOn) => (
             <p key={addOn.id} className="text-sm flex justify-between">
-              <span>{addOn.title}</span>
-              <span>
-                {userData.isAnnual ? `$${addOn.annualCost}/yr` : `$${addOn.monthlyCost}/mo`}
+              <span className="text-cool-gray">{addOn.title}</span>
+              <span className="text-marine-blue font-medium">
+                +${userData.isAnnual ? `${addOn.annualCost}/yr` : `${addOn.monthlyCost}/mo`}
               </span>
             </p>
           ))}
@@ -46,7 +54,7 @@ const SummaryStep = forwardRef((props, ref) => {
       </div>
       <p className="flex justify-between items-center px-6">
         <span className="text-sm text-cool-gray font-medium">Total (per month)</span>
-        <span className="text-purplish-blue font-bold text-xl">+${totalCost()}/mo</span>
+        <span className="text-purplish-blue font-bold text-xl">${totalCost()}/mo</span>
       </p>
     </div>
   );

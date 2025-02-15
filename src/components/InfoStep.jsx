@@ -26,7 +26,7 @@ const InfoStep = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 lg:space-y-8">
       <TextField
         label="Name"
         value={name}

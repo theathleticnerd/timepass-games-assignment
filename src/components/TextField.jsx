@@ -26,7 +26,7 @@ export default function TextField(props) {
         required={required}
         placeholder={placeholder}
         onBlur={() => setTouched(true)}
-        className={`border border-light-gray w-full h-12 px-2.5 rounded-lg font-medium ${touched && required && !value && 'border-strawberry-red'}`}
+        className={`border border-light-gray w-full h-10 lg:h-12 px-2.5 rounded-lg font-medium focus:border-purplish-blue hover:border-purplish-blue ${touched && required && !value && 'border-strawberry-red'}`}
       />
     </div>
   );
