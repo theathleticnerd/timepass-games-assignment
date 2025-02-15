@@ -4,10 +4,12 @@ const PlanStep = forwardRef((props, ref) => {
   const userData = props.userData || {};
   const [selectedPlan, setSelectedPlan] = useState(userData.planID || null);
   const [isAnnual, setIsAnnual] = useState(userData.isAnnual || false);
+  const [selectedPlanError, setSelectedPlanError] = useState(null);
   const nextStep = () => {
     let isValid = true;
+    setSelectedPlanError(null);
     if (!selectedPlan) {
-      console.log('Please select a plan.');
+      setSelectedPlanError('Please select a plan.');
       isValid = false;
     }
     if (isValid) {
@@ -22,7 +24,7 @@ const PlanStep = forwardRef((props, ref) => {
   }));
   return (
     <div className="lg:mt-4">
-      <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 mb-8">
+      <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 lg:mb-4 mb-3">
         {planOptions.map((plan) => {
           return (
             <div
@@ -48,7 +50,11 @@ const PlanStep = forwardRef((props, ref) => {
         })}
       </div>
 
-      <label className="flex justify-center items-center bg-light-blue py-2 rounded-lg cursor-pointer">
+      <p className="text-strawberry-red font-medium mb-3 lg:mb-4 text-sm">
+        &nbsp;{selectedPlanError && selectedPlanError}
+      </p>
+
+      <label className="flex justify-center items-center bg-magnolia py-3 lg:py-2 rounded-lg cursor-pointer">
         <input
           type="checkbox"
           checked={isAnnual}
@@ -58,12 +64,12 @@ const PlanStep = forwardRef((props, ref) => {
           }}
         />
         <span
-          className={`mx-3 text-sm font-semibold ${isAnnual ? 'text-cool-gray' : 'text-marine-blue'}`}>
+          className={`mx-6 text-sm font-semibold ${isAnnual ? 'text-cool-gray' : 'text-marine-blue'}`}>
           Monthly
         </span>
         <div className="relative w-11 h-6 bg-marine-blue peer-focus:outline-none peer-focus:ring peer-focus:ring-marine-blue  rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-light-gray after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-marine-blue"></div>
         <span
-          className={`mx-3 text-sm font-semibold ${isAnnual ? 'text-marine-blue' : 'text-cool-gray'}`}>
+          className={`mx-6 text-sm font-semibold ${isAnnual ? 'text-marine-blue' : 'text-cool-gray'}`}>
           Yearly
         </span>
       </label>

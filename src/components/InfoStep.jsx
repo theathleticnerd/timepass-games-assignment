@@ -5,15 +5,32 @@ const InfoStep = forwardRef((props, ref) => {
   const [name, setName] = useState(userData.name || '');
   const [email, setEmail] = useState(userData.email || '');
   const [phoneNumber, setPhoneNumber] = useState(userData.phoneNumber || '');
-
+  const [nameError, setNameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [phoneNumberError, setPhoneNumberError] = useState(null);
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const phoneNumberRegex = /^[\d\s()+-]+$/;
   const nextStep = () => {
     let isValid = true;
+    setNameError(null);
+    setEmailError('');
+    setPhoneNumberError(null);
     if (!name) {
-      console.log('Name is required.');
+      setNameError('This is required.');
+      isValid = false;
+    } else if (name.length < 2) {
+      setNameError('Name should have at least 2 characters');
+      isValid = false;
+    }
+    if (email && !emailRegex.test(email)) {
+      setEmailError('Email not valid');
       isValid = false;
     }
     if (!phoneNumber) {
-      console.log('Phone Number is required');
+      setPhoneNumberError('This is required');
+      isValid = false;
+    } else if (!phoneNumberRegex.test(phoneNumber)) {
+      setPhoneNumberError('Phone Number not valid');
       isValid = false;
     }
     if (isValid) {
@@ -32,6 +49,7 @@ const InfoStep = forwardRef((props, ref) => {
         value={name}
         placeholder="e.g. Stephen King"
         onChange={(event) => setName(event.target.value)}
+        errorMessage={nameError}
         required
       />
       <TextField
@@ -40,6 +58,7 @@ const InfoStep = forwardRef((props, ref) => {
         label="Email Address"
         placeholder="e.g. stephenking@lorem.com"
         onChange={(event) => setEmail(event.target.value)}
+        errorMessage={emailError}
       />
       <TextField
         label="Phone Number"
@@ -48,6 +67,7 @@ const InfoStep = forwardRef((props, ref) => {
         onChange={(event) => {
           setPhoneNumber(event.target.value);
         }}
+        errorMessage={phoneNumberError}
         required
       />
     </div>

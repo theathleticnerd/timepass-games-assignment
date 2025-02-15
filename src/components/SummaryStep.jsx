@@ -22,8 +22,8 @@ const SummaryStep = forwardRef((props, ref) => {
   }));
   return (
     <div>
-      <div className="bg-magnolia px-6 py-4 rounded-lg mb-4">
-        <div className="flex justify-between items-center mb-3 lg:mb-3.5">
+      <div className="bg-alabaster px-6 py-4 rounded-lg mb-4">
+        <div className="flex justify-between items-center">
           <div>
             <p className="font-semibold text-marine-blue">
               {selectedPlan.name} <span>({userData.isAnnual ? 'Yearly' : 'Monthly'})</span>
@@ -40,17 +40,21 @@ const SummaryStep = forwardRef((props, ref) => {
               : `$${selectedPlan.monthlyCost}/mo`}
           </button>
         </div>
-        <div className="border-b border-light-gray pt-0.5 mb-3 lg:mb-3.5"></div>
-        <div className="space-y-4 mb-2">
-          {selectedAddOns.map((addOn) => (
-            <p key={addOn.id} className="text-sm flex justify-between">
-              <span className="text-cool-gray">{addOn.title}</span>
-              <span className="text-marine-blue font-medium">
-                +${userData.isAnnual ? `${addOn.annualCost}/yr` : `${addOn.monthlyCost}/mo`}
-              </span>
-            </p>
-          ))}
-        </div>
+        {selectedAddOns.length > 0 && (
+          <>
+            <div className="border-b border-light-gray pt-0.5 mt-3 mb-3 lg:mt-3.5 lg:mb-3.5"></div>
+            <div className="space-y-4 mb-2">
+              {selectedAddOns.map((addOn) => (
+                <p key={addOn.id} className="text-sm flex justify-between">
+                  <span className="text-cool-gray">{addOn.title}</span>
+                  <span className="text-marine-blue font-medium">
+                    +${userData.isAnnual ? `${addOn.annualCost}/yr` : `${addOn.monthlyCost}/mo`}
+                  </span>
+                </p>
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <p className="flex justify-between items-center px-6">
         <span className="text-sm text-cool-gray font-medium">Total (per month)</span>

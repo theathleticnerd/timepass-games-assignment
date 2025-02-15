@@ -1,6 +1,5 @@
 import { useState, useMemo, useRef } from 'react';
 import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
-import MobileBanner from 'src/assets/images/bg-sidebar-mobile.svg';
 import ThankYouScreen from 'src/components/ThankYouScreen';
 import InfoStep from 'src/components/InfoStep';
 import PlanStep from 'src/components/PlanStep';
@@ -86,7 +85,7 @@ export default function HomePage() {
   const ref = (stepRefs.current[activeStep] = useRef(null));
   return (
     <main className="max-w-7xl mx-auto h-svh relative">
-      <div className="lg:hidden bg-[url('src/assets/images/bg-sidebar-mobile.svg')] h-[10rem] flex pt-8 justify-center space-x-4 text-white">
+      <div className="lg:hidden bg-[url('src/assets/images/bg-sidebar-mobile.svg')]  bg-no-repeat  bg-cover h-[10rem] flex pt-8 justify-center space-x-4 text-white">
         {steps.map((step) => (
           <p
             className={`border size-8 rounded-full flex items-center justify-center font-semibold text-sm ${step.id === activeStep && 'bg-light-blue text-marine-blue border-light-blue'}`}>
@@ -94,13 +93,13 @@ export default function HomePage() {
           </p>
         ))}
       </div>
-      <div className="absolute flex bg-white lg:w-4xl top-[6.2rem] -translate-x-1/2  lg:top-1/2 left-1/2 min-h-96 lg:-translate-1/2 lg:min-h-[32rem] rounded-xl shadow-lg lg:px-3 lg:py-3 justify-between space-x-24 w-11/12 px-5">
+      <div className="absolute flex bg-white lg:w-4xl top-[6.2rem] -translate-x-1/2  lg:top-1/2 left-1/2 min-h-96 lg:-translate-1/2 lg:min-h-[32rem] rounded-xl shadow-lg lg:px-3 lg:py-3 justify-between space-x-24 w-11/12 px-5 py-8 overflow-y-auto">
         <div className="hidden lg:block bg-[url('src/assets/images/bg-sidebar-desktop.svg')] bg-no-repeat relative rounded-lg shrink-0">
           <div className="space-y-8 px-8 py-12 absolute">
             {steps.map((step) => (
               <div key={step.id} className="flex items-center space-x-3 text-white/90">
                 <p
-                  className={`border size-8 rounded-full flex items-center justify-center font-semibold text-sm ${step.id === activeStep && 'bg-[#bfe2fd] text-marine-blue border-[#bfe2fd]'}`}>
+                  className={`border size-8 rounded-full flex items-center justify-center font-semibold text-sm ${step.id === activeStep && 'bg-light-blue text-marine-blue border-pastel-blue'}`}>
                   {step.id}
                 </p>
                 <div>
@@ -112,11 +111,11 @@ export default function HomePage() {
           </div>
           <img src={DesktopBanner} alt="Desktop Banner Image" className="invisible" />
         </div>
-        <div className="lg:mr-20 lg:grow lg:flex">
+        <div className="grow lg:mr-20 lg:grow lg:flex">
           {isThankYouScreen ? (
             <ThankYouScreen />
           ) : (
-            <div className="flex flex-col h-full justify-between pt-8 pb-8 lg:pt-10 lg:pb-6 grow">
+            <div className="flex flex-col h-full justify-between lg:pt-10 lg:pb-6 grow">
               <h2 className="text-marine-blue text-2xl lg:text-3xl font-bold mb-2">
                 {currentStep.title}
               </h2>
