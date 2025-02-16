@@ -1,10 +1,10 @@
 import { useState, useMemo, useRef } from 'react';
 import DesktopBanner from 'src/assets/images/bg-sidebar-desktop.svg';
 import ThankYouScreen from 'src/components/ThankYouScreen';
-import InfoStep from 'src/components/InfoStep';
-import PlanStep from 'src/components/PlanStep';
-import AddonStep from 'src/components/AddonStep';
-import SummaryStep from 'src/components/SummaryStep';
+import InfoStep from 'src/steps/InfoStep';
+import PlanStep from 'src/steps/PlanStep';
+import AddonStep from 'src/steps/AddonStep';
+import SummaryStep from 'src/steps/SummaryStep';
 export default function HomePage() {
   const steps = [
     {

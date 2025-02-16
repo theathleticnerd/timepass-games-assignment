@@ -32,6 +32,9 @@ const InfoStep = forwardRef((props, ref) => {
     } else if (!phoneNumberRegex.test(phoneNumber)) {
       setPhoneNumberError('Phone Number not valid');
       isValid = false;
+    } else if (phoneNumber.length < 6) {
+      setPhoneNumberError('Minimum length 6 digits');
+      isValid = false;
     }
     if (isValid) {
       return { name, email, phoneNumber };

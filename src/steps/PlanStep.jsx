@@ -54,7 +54,7 @@ const PlanStep = forwardRef((props, ref) => {
         &nbsp;{selectedPlanError && selectedPlanError}
       </p>
 
-      <label className="flex justify-center items-center bg-magnolia py-3 lg:py-2 rounded-lg cursor-pointer">
+      <label className="flex justify-center items-center bg-magnolia py-3 lg:py-2.5 rounded-lg cursor-pointer">
         <input
           type="checkbox"
           checked={isAnnual}
