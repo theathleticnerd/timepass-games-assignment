@@ -30,22 +30,22 @@ export default function HomePage() {
   ];
   const stepContent = {
     step1: {
-      title: 'Personal Info',
+      title: 'Personal info',
       subtitle: 'Please provide your name, email address and phone number.',
       component: InfoStep
     },
     step2: {
-      title: 'Select Your Plan',
+      title: 'Select your plan',
       subtitle: 'You have the option of monthly or yearly billing.',
       component: PlanStep
     },
     step3: {
-      title: 'Pick Add-ons',
+      title: 'Pick add-ons',
       subtitle: 'Add-ons help enhance your gaming experience.',
       component: AddonStep
     },
     step4: {
-      title: 'Finishing Up',
+      title: 'Finishing up',
       subtitle: 'Double check whether everything looks OK before confirming.',
       component: SummaryStep
     }
@@ -119,7 +119,7 @@ export default function HomePage() {
               <h2 className="text-marine-blue text-2xl lg:text-3xl font-bold mb-2">
                 {currentStep.title}
               </h2>
-              <p className="text-cool-gray mb-6 text-sm font-medium">{currentStep.subtitle}</p>
+              <p className="text-cool-gray mb-6 text-sm">{currentStep.subtitle}</p>
               <div className="grow">
                 <Component ref={ref} userData={userData} goToStep={goToStep} />
               </div>
@@ -130,7 +130,7 @@ export default function HomePage() {
                   Go Back
                 </button>
                 <button
-                  className="px-6 bg-marine-blue py-3 text-white rounded-lg font-semibold text-sm cursor-pointer"
+                  className={`px-6 py-3 text-white rounded-lg font-semibold cursor-pointer ${activeStep === steps.length ? 'bg-purplish-blue' : 'bg-marine-blue'}`}
                   onClick={goToNextStep}>
                   {activeStep === steps.length ? 'Confirm' : 'Next Step'}
                 </button>
@@ -147,7 +147,7 @@ export default function HomePage() {
             Go Back
           </button>
           <button
-            className="px-4 bg-purplish-blue py-2.5 text-white rounded-lg font-semibold text-sm cursor-pointer"
+            className={`px-4 py-2.5 text-white rounded-lg font-semibold text-sm cursor-pointer ${activeStep === steps.length ? 'bg-purplish-blue' : 'bg-marine-blue'}`}
             onClick={goToNextStep}>
             {activeStep === steps.length ? 'Confirm' : 'Next Step'}
           </button>
