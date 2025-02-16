@@ -2,6 +2,8 @@
 
 A multi-step form built using **Vite**, **React**, and **Tailwind CSS**.
 
+The multi-step form assignment is hosted at [https://timepass-games-assignment-one.vercel.app/](https://timepass-games-assignment-one.vercel.app/).
+
 ## 🚀 Features
 
 - Step-by-step form navigation
@@ -21,8 +23,8 @@ A multi-step form built using **Vite**, **React**, and **Tailwind CSS**.
 Clone the repository and install dependencies:
 
 ```sh
-git clone https://github.com/your-repo/multi-step-form.git
-cd multi-step-form
+git clone https://github.com/theathleticnerd/timepass-games-assignment.git
+cd timepass-games-assignment
 npm install
 ```
 
